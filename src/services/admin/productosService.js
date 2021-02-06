@@ -1,8 +1,10 @@
 import { URL_BACKEND_admin } from "../../environments/environments";
 
-export const getProductos = async () => {
-  const peticion = await fetch(`${URL_BACKEND_admin}/producto`);
-  const data = await peticion.json();
+export const getProductos = async (termino="") => {
+  let url=termino.trim().length>2? `${URL_BACKEND_admin}/producto?search=${termino}`:
+  `${URL_BACKEND_admin}/producto`;
+  const peticion=await fetch (url);
+  const data= await peticion.json();
   return data;
 };
 

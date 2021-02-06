@@ -1,8 +1,7 @@
 import React from "react";
 import {
-  BrowserRouter,
   HashRouter,
-  Redirect,
+  
   Route,
   Switch,
 } from "react-router-dom";
@@ -15,17 +14,17 @@ import CarritoRouter from "./modules/carrito/CarritoRouter";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AuthState>
         <Switch>
           <Route path="/auth" component={AuthRouter} />
           <Private path="/admin" component={AdminRouter} />
           {/* <Redirect to="/auth/login"/>  */}
 
-          <Route path="/carrito" component={CarritoRouter} />
+          <Route path="/" component={CarritoRouter} />
         </Switch>
       </AuthState>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

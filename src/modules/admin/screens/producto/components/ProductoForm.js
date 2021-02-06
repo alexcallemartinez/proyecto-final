@@ -18,7 +18,7 @@ const ProductoForm = () => {
 
 const   [formulario,setFormulario]= useState({...formularioVacio});
 const [sku, setSku]=useState(uuidv4());
-const {obtenerProductos}=useContext(ProductosContext);
+const {obtenerProductos,setModalAgregar}=useContext(ProductosContext);
 const {categorias} =useContext(CategoriasContext)
 
 const handleChange=e=>{
@@ -42,13 +42,14 @@ const submit=(e)=>{
                     setFormulario(formularioVacio);
                     setSku(uuidv4());
                         obtenerProductos();
+                        setModalAgregar(false);
                         Swal.fire({
                             title:"Hecho!",
                             text:"EL producto a sido creado con exito",
                             icon:"success",
                             showCancelButton:false,
                             timer:500,
-                            position:"top-right"
+                           
                         })
                 }
             })
@@ -60,9 +61,7 @@ const submit=(e)=>{
 }
 
     return (
-        <section className="col-md-4 animate__animated animate__fadeInRightanimate__animated animate__fadeInRight">
-            <div className="card shadow">
-                <div className="card-body">
+       
                     <form onSubmit={submit}>
                         <div className="form-group">
                             <label htmlFor="prod_nom" >Nombre</label>
@@ -103,11 +102,7 @@ const submit=(e)=>{
                             <button className="btn btn-primary" type="submit">Crear producto</button>
                         </div>
                     </form>
-                </div>
-
-            </div>
-
-        </section>
+               
     )
 }
 

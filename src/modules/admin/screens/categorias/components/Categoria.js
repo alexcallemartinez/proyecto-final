@@ -34,7 +34,7 @@ const Categoria = () => {
       }
 
 
-  const [datatable] = useState({
+  const datatable ={
     columns: [
         { label: "Id", field: "cat_id" },
         { label: "Nombre", field: "cat_nom" },
@@ -53,12 +53,12 @@ const Categoria = () => {
       setCategoriaEditar(objCategoria);
       setModalEditar(true);
     }}>
-      Editar
+      <i className="fas fa-edit"></i>
     </button>
     <button className="btn btn-danger" onClick={() => {
       eliminar(objCategoria.cat_id);
     }}>
-      Eliminar
+      <i className="fas fa-times"></i>
     </button>
  
         </div>
@@ -66,13 +66,14 @@ const Categoria = () => {
         )
        }
     })
-});
+};
 
     
     return (
         <section className="col">
         <div className="card shadow">
             <div className="card-body">
+              
             <button className="btn btn-primary success" onClick={() => {
                     setModalAgregar(true);
                   }}>
@@ -86,7 +87,7 @@ const Categoria = () => {
                  <div>...cargando</div> :
                  (
                  <>
-                 <button className="btn btn-warning" onClick={()=>{
+                 <button className="btn btn-success" onClick={()=>{
                     obtenerCategorias();
                 }}><i className="fas fa-sync-alt"></i></button>
                 <hr/>
@@ -98,7 +99,6 @@ const Categoria = () => {
                   bordered
                   pagingTop
                  infoLabel={["Mostrando","a","de","categorias"]}
-                 displayEntriesLabel={["Filas","Por"]}
                  fixed
                  searchLabel="Buscar"/>
 

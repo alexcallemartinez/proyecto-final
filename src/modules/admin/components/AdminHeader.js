@@ -15,13 +15,13 @@ const AdminHeader = () => {
             <div className="collapse navbar-collapse" id="collapsibleNavId">
                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                   <li className="nav-item">
-                        <NavLink className="nav-link" ClassName="active" exact to="/admin/home">Home </NavLink>
+                        <NavLink className="nav-link active"  exact to="/admin/home">Home </NavLink>
                     </li>
                     <li className="nav-item ">
-                        <NavLink className="nav-link" ClassName="active" to="/admin/categoria">Categorias </NavLink>
+                        <NavLink className="nav-link active"  to="/admin/categoria">Categorias </NavLink>
                     </li>
                     <li className="nav-item ">
-                        <NavLink className="nav-link" ClassName="active"   to="/admin/producto">Productos </NavLink>
+                        <NavLink className="nav-link active"  to="/admin/producto">Productos </NavLink>
                     </li>
                     
                 </ul>

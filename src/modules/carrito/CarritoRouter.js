@@ -1,16 +1,23 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import ProductosState from "../../context/admin/productosState";
 import CarritoState from "../../context/carrito/carritoState";
+import CarritoHeader from "./screens/carritos/CarritoHeader";
 import CarritoScreen from "./screens/CarritoScreen";
+
 
 const CarritoRouter = () => {
   return (
     <>
-      {/* <CarritoState> */}
+    
+       <CarritoState> 
+       <ProductosState>
       <Switch>
-      <Route path="/carrito/venta/:id?" component={CarritoScreen} />
+     
+      <Route path="/cart" component={CarritoScreen} />
       </Switch>
-      {/* </CarritoState> */}
+      </ProductosState>
+       </CarritoState> 
     </>
   );
 };

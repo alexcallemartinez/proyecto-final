@@ -9,27 +9,35 @@ import ProductoFormEditar from './components/ProductoFormEditar';
 
 const ProducoScreen = () => {
 
-const [formCrear, setFormCrear]= useState(false);
 
-const {modalEditar,setModalEditar} = useContext(ProductosContext);
+
+const {modalAgregar,modalEditar,setModalAgregar,setModalEditar} = useContext(ProductosContext);
 
     return (
-        <main className="container-fluid mt-5">
-            <div className="row mb-4">
-                <div className="col text-right">
-                <button className="btn btn-success shadow" onClick={()=>{
-                    setFormCrear(!formCrear);
-                }}>
-                    crear Producto
-                </button>
-                </div>
-                </div>
-                <div className="row">
+        <main className="container">
+            <div className="row ">
+               
                 <Productos/>
-                {
-                    formCrear && <ProductoForm/>
-                }
                 </div>
+
+            {/* modal agregar */}
+
+ <Modal show={modalAgregar} onHide={() => {
+        setModalAgregar(false);
+      }}>
+        <Modal.Header closeButton>
+          <Modal.Title>Agregar Producto</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ProductoForm/>
+        </Modal.Body>
+
+      </Modal>
+
+
+      {/* modal editar */}
+
+
             <Modal show={modalEditar} onHide={()=>{
                 setModalEditar(false);
             }}>

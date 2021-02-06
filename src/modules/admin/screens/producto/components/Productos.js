@@ -1,117 +1,137 @@
-import React,{useContext} from 'react'
+import React, { useContext } from 'react'
 import Swal from 'sweetalert2';
 import CategoriasContext from '../../../../../context/admin/categoriasContext';
 import ProductosContext from '../../../../../context/admin/productosContext';
 import { deleteProducto } from '../../../../../services/admin/productosService';
-
+import { MDBDataTableV5 } from 'mdbreact';
 
 
 const Productos = () => {
-    const {productos,cargandoProductos, obtenerProductos, setModalEditar,setProductoEditar}=useContext(ProductosContext);
+    const { productos, cargandoProductos, obtenerProductos, setModalAgregar, setModalEditar, setProductoEditar } = useContext(ProductosContext);
 
-    const {categorias}=useContext(CategoriasContext);
+    const { categorias } = useContext(CategoriasContext);
 
-    const  eliminar = prod_id =>{
+    const eliminar = prod_id => {
         Swal.fire({
-            title:"¿Seguro de eliminar el producto",
-            icon:"error",
-            text:"Los cambios serán irreversibles ",
-            showCancelButton:true
-        }).then(rpta=>{
-            if(rpta.isConfirmed){
-                deleteProducto(prod_id).then(data=>{
-                    if(data.prod_id){
+            title: "¿Seguro de eliminar el producto",
+            icon: "error",
+            text: "Los cambios serán irreversibles ",
+            showCancelButton: true
+        }).then(rpta => {
+            if (rpta.isConfirmed) {
+                deleteProducto(prod_id).then(data => {
+                    if (data.prod_id) {
                         obtenerProductos();
                         Swal.fire({
-                            title:"Eliminado",
+                            title: "Eliminado",
                             icon: "success",
-                            timer:700,
-                            showCancelButton:false,
-                            position:"top-end"
+                            timer: 700,
+                            showCancelButton: false,
+
                         })
                     }
                 })
             }
         })
     }
-    
-    return (
-        <section className="col-md-8">
-           <div className="card shadow">
-               <div className="card-body">
-                {
-                    cargandoProductos ?
-                    <div className="alert alert-info text-center" role="alert">
-                    <h4 className="alert-heading">Cargando producto</h4>
 
-                    <div className="spinner-border" role="status">
-                   <span className="sr-only">Loading...</span>
-                    </div>
-                     </div> 
-                    
-                    :
-                    (
+    // -----inicia la tabla
+
+    const datatable = {
+        columns: [
+            { label: "Id", field: "prod_id" },
+            { label: "Nombre", field: "prod_nom" },
+            { label: "Precio", field: "prod_pre" },
+            { label: "Stock", field: "prod_stock" },
+            { label: "SKU", field: "prod_sku" },
+            { label: "Categoria", field: "cat_id" },
+            { label: "Imagen", field: "prod_img" },
+            { label: "acciones", field: "acciones" },
+
+        ],
+        rows: productos.map((objProductos) => {
+            return {
+                ...objProductos,
+                prod_id: +objProductos.prod_id,
+                prod_nom: objProductos.prod_nom,
+                prod_pre:objProductos.prod_pre,
+                prod_stock:objProductos.prod_stock,
+                prod_sku:objProductos.prod_sku,
+                cat_id:categorias.find(objCategoria => +objCategoria.cat_id === +objProductos.cat_id)?.cat_nom,
+                prod_img:<img src={objProductos.prod_img} alt="" width="65"/>,
+
+                acciones: (
                     <>
-                    <div className="text-right mb-3">
-                    <button className="btn btn-success" onClick={()=>{
-                       obtenerProductos();
-                   }}>Refrescar tabla</button>
-                </div>
-               <div className="table-responsive">
-                   <table className="table table-bordered table-striped">
-                       <thead>
-                           <tr>
-                               <th>ID</th>
-                               <th>Nombre</th>
-                               <th>Precio</th>
-                               <th>Stock</th>
-                               <th>SKU</th>
-                               <th>Categoria</th>
-                               <th>imagen</th>
-                               <th>acciones</th>
-                           </tr>
-                       </thead>
-                       <tbody>
-                           {
-                               productos.map((objProducto)=>{
-                                   return (<tr key={objProducto.prod_id}>
-                                       <td>{objProducto.prod_id}</td>
-                                       <td>{objProducto.prod_nom}</td>
-                                       <td>{objProducto.prod_pre}</td>
-                                       <td>{objProducto.prod_stock}</td>
-                                       <td>{objProducto.prod_sku}</td>
-                                       <td>{
-                                       (categorias.find(objCategoria=> +objCategoria.cat_id === +objProducto.cat_id))?.cat_nom
-                                       }</td>
-                                       <td><img src={objProducto.prod_img} alt="" width="65"/></td>
-                                       <td>
-                                           <div className="d-flex">
-                                           <button className="btn btn-secondary" onClick={()=>{
-                                               setProductoEditar(objProducto);
-                                               setModalEditar(true);
-                                           }}>
-                                               Editar
-                                          </button>
-                                          <button className="btn btn-danger" onClick={()=>{
-                                           eliminar(objProducto.prod_id)
-                                          }}>Eliminar</button>
-                                          </div>
-                                       </td>
-                                   </tr>)
-                               })
-                           }
-                       </tbody>
-                   </table>
-               </div>
+                        <div className="d-flex">
+                            <button className="btn btn-secondary mr-2" onClick={() => {
+                                setProductoEditar(objProductos);
+                                setModalEditar(true);
+                            }}>
+                                <i className="fas fa-edit"></i>
+                            </button>
+                            <button className="btn btn-danger" onClick={() => {
+                                eliminar(objProductos.prod_id);
+                            }}>
+                                <i className="fas fa-times"></i>
+                            </button>
 
+                        </div>
                     </>
+                )
+            }
+        })
+    };
+
+    // termina la tabla
+
+    return (
+        <section className="col">
+            <div className="card shadow">
+                <div className="card-body">
+
+                    <button className="btn btn-primary success" onClick={() => {
+                        setModalAgregar(true);
+                    }}>
+
+                        <i className="fas fa-plus-circle"></i>
+                    </button>
+                    {
+                        cargandoProductos ?
+                            <div className="alert alert-info text-center" role="alert">
+                                <h4 className="alert-heading">Cargando producto</h4>
+
+                                <div className="spinner-border" role="status">
+                                    <span className="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            :
+                            (
+                                <>
+
+                                    <button className="btn btn-success" onClick={() => {
+                                        obtenerProductos();
+                                    }}><i className="fas fa-sync-alt"></i></button>
+                                    <hr />
+                                    {/* aquiva */}
+                                    <MDBDataTableV5 data={datatable} searchTop
+                                        searchBottom={false}
+                                        responsive
+                                        striped
+                                        bordered
+                                        pagingTop
+                                        infoLabel={["Mostrando", "a", "de", "productos"]}
+                                        fixed
+                                        searchLabel="Buscar" />
+
+                                </>
 
 
-                    )
-                }
-                   
-               </div>
-           </div>
+                            )
+                    }
+
+                </div>
+            </div>
 
         </section>
     )

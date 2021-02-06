@@ -1,25 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, NavLink } from 'react-router-dom'
 
-// import { Link } from "react-router-dom";
 
-const CarritoHeader = (props) => {
-  const { categorias } = props;
+const CarritoHeader = () => {
 
-  //   const [categorias, setCategorias] = useState([]);
-  //   const [cargando, setCargando] = useState(true);
-  //   const { seleccionarCategoriaGlobal, categoria_global } = useContext(
-  //     CarritoContext
-  //   );
-
-  //   useEffect(() => {
-  //     getCategorias().then((data) => {
-  //       if (data) {
-  //         setCategorias(data);
-  //         setCargando(false);
-  //       }
-  //     });
-  //   }, []);
+    
 
   return (
     <header>
@@ -38,29 +23,20 @@ const CarritoHeader = (props) => {
         ></button>
         <div className="collapse navbar-collapse" id="collapsibleNavId">
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-            {categorias.map((objCategoria) => {
-              return (
-                <li
-                  className="nav-item"
-                  style={{ textAlign: "center" }}
-                  key={objCategoria.cat_id}
-                >
-                  <a
-                    className="nav-link"
-                    href={"/carrito/venta/" + objCategoria.cat_id}
-                  >
-                    {objCategoria.cat_nom}
-                  </a>
-                  {/* <Link
-                    to=
-                    className="nav-link"
-                  ></Link> */}
-                </li>
-              );
-            })}
+          <li className="nav-item">
+            <NavLink className="nav-link active"  exact to="/home">Home </NavLink>
+            
+           </li>
+           <li className="nav-item">
+           
+            <NavLink className="nav-link active"  exact to="/cart">Cart </NavLink>
+           </li>
           </ul>
           <form className="form-inline my-2 my-lg-0">
-            <button
+          <button className="btn btn-light" >
+                        <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+          </button>
+            {/* <button
               className="btn btn-danger mr-2"
               // onClick={()=>{
               //   cerrarSesion();
@@ -68,7 +44,7 @@ const CarritoHeader = (props) => {
             >
               <i className="fas fa-door-open"></i>
             </button>
-            {/* <span>{usu_nom}</span> */}
+            <span>{usu_nom}</span> */}
           </form>
         </div>
       </nav>

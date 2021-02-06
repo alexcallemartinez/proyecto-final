@@ -38,8 +38,8 @@ const AuthLoginScreen = (props) => {
     <form className="form-signin" onSubmit={submit}>
       <img className="mb-4" src={logo} alt="" width="72" height="72" />
       <h1 className="h3 mb-3 font-weight-normal">Iniciar sesión</h1>
-      <label for="inputEmail" className="sr-only">Corro Electronico</label>
-      <input type="email" id="inputEmail" className="form-control" placeholder="Ejm: jgarnica@mail.com" required autofocus id="correo" name="correo" onChange={handleChange} value={formulario.correo} />
+      <label for="inputEmail" className="sr-only">Correo Electronico</label>
+      <input type="email" id="inputEmail" className="form-control" placeholder="Ejm: user@gmail.com" required autofocus id="correo" name="correo" onChange={handleChange} value={formulario.correo} />
       <label for="inputPassword" className="sr-only">Contraseña</label>
       <input type="password" id="inputPassword" className="form-control" placeholder="Password" required name="password" id="password"
                      className="form-control" onChange={handleChange}
